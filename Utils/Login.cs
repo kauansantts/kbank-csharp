@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using KBank.Models;
 
-namespace KBank.Services
+namespace KBank.Utils
 {
-    public class Banco
+    public class Login
     {
-        
+
     }
 }
