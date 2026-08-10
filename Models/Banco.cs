@@ -7,9 +7,23 @@ namespace KBank.Models
 {
     public class Banco
     {
-        public List<ContaBancaria> Contas = new List<ContaBancaria>();
+        public  List<ContaBancaria> Contas = new List<ContaBancaria>();
 
 
+        public void login(string nameCont, int numberCont)
+        {
+            foreach (var conta in Contas)
+            {
+                if (conta.NumeroConta == numberCont && conta.NomeTitular == nameCont)
+                {
+                    Console.WriteLine("Conta encontrada!");
+                }
+                else
+                {
+                    throw new ContaInexistente("Essa conta não existe!");
+                }
+            }
+        }
         public void CadastrarConta()
         {
             Console.WriteLine("==Gerando numero de conta=========");
@@ -18,7 +32,7 @@ namespace KBank.Models
             {
                 if (conta.NumeroConta == NumeroConta)
                 {
-                    throw new ContaExistenteException("Numero de conta ja existente!");// exceção de conta ja existente para tratar la em services!
+                    throw new ContaExistenteException("Numero de conta ja existente!");
                 }
                 else
                 {
@@ -36,13 +50,15 @@ namespace KBank.Models
             Console.WriteLine($"Conta[{NumeroConta}] cadastrada com sucesso!");
         }
 
-        public void RemoverConta(ContaBancaria conta)
+        public void RemoverConta(string nameCont, int numberCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
         {
-            foreach (var user in Contas)
+            foreach (var conta in Contas)
             {
-                if (user.NumeroConta == conta.NumeroConta)
+                if (conta.NumeroConta == numberCont && conta.NomeTitular == nameCont)
                 {
+                    Console.WriteLine("Conta encontrada!");
                     Contas.Remove(conta);
+                    Console.WriteLine($"Conta[{conta.NumeroConta}] removida com sucesso!"); 
                 }
                 else
                 {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using KBank.Exceptions;
-using KBank.Utils;
 
 namespace KBank.Models
 {

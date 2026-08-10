@@ -6,7 +6,8 @@ namespace KBank.Enums
 {
     public enum EnumTransacoes
     {
-        Saque =1,
-        Deposito =2
+        Despesas =1,
+        Receitas =2,//Isso seria as entradas fixas ex:salario, rendas
+        Investimentos =3
     }
 }
