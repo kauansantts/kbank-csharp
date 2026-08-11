@@ -4,9 +4,8 @@ using System.Text;
 
 namespace KBank.Exceptions
 {
-    public class ContaInexistente : Exception
+    public class ContaInexistenteException : Exception
     {
-        public ContaInexistente() { }
-        public ContaInexistente(string message) : base(message) { }
+        public ContaInexistenteException(string message) : base(message) { }
     }
 }

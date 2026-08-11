@@ -12,27 +12,18 @@ namespace KBank.Models
         public Banco() { }
 
 
-        public void Login(string nameCont, int numberCont)
+        public void Login(int numberCont, string nameCont)
         {
-            var i = 0;
             foreach (var conta in Contas)
             {
                 if (conta.NumeroConta == numberCont && conta.NomeTitular == nameCont)
                 {
                     Console.WriteLine($"Bem vindo {conta.NomeTitular}!");
                     Console.WriteLine("=============================");
-                    break;
-                }
-
-                if (i == Contas.Count)
-                {
-                    throw new ContaInexistente("Essa conta não existe!");//ver o porque de nao estar caindo aqui quando faz login e depois continuar menulogado!
-                }
-                else
-                {
-                    i++;
+                    return;
                 }
             }
+            throw new ContaInexistenteException("\"Essa conta não existe!\"");
         }
         public void CadastrarConta()
         {
@@ -42,11 +33,8 @@ namespace KBank.Models
             {
                 if (conta.NumeroConta == NumeroConta)
                 {
-                    throw new ContaExistenteException("Numero de conta ja existente!");
-                }
-                else
-                {
-                    break;
+                    var NumeroContaNovo = new Random().Next(1000, 9999);
+                    NumeroConta = NumeroContaNovo;
                 }
             }
             string NomeTitular;
@@ -61,23 +49,29 @@ namespace KBank.Models
             Console.WriteLine("=============================");
         }
 
-        public void RemoverConta(string nameCont, int numberCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
+        public void RemoverConta(ContaBancaria conta)//So consegue usar esse metodo, se ja estiver dentro da conta!
         {
-            foreach (var conta in Contas)
+            if (BuscarConta(conta) == conta)
             {
-                if (conta.NumeroConta == numberCont && conta.NomeTitular == nameCont)
+                Contas.Remove(conta);
+                Console.WriteLine($"Conta[{conta.NumeroConta}] removida com sucesso!");
+            }
+        }
+
+
+
+        public ContaBancaria BuscarConta(ContaBancaria conta)
+        {
+            foreach (var user in Contas)
+            {
+                if (user.NumeroConta == conta.NumeroConta && user.NomeTitular == conta.NomeTitular)
                 {
-                    Console.WriteLine("Conta encontrada!");
-                    Contas.Remove(conta);
-                    Console.WriteLine($"Conta[{conta.NumeroConta}] removida com sucesso!");
-                    Console.WriteLine("=============================");
-                    break;
-                }
-                else
-                {
-                    throw new ContaInexistente("Essa conta não existe!");
+                    Console.WriteLine($"Conta encontrada: [{conta.NomeTitular}]");
+                    return conta;
                 }
             }
+            throw new ContaInexistenteException("Essa conta não existe!");
+
         }
     }
 }

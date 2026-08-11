@@ -63,9 +63,32 @@ namespace KBank.Models
             }
         }
 
-        public void MenuLogado()
+        public static void MenuLogado()
         {
-            Menus.Menuopc("Depositar", "Sacar", "Remover conta");
+            while (true)
+            {
+                Menus.Menuopc("Depositar", "Sacar", "Remover conta", "Sair da conta");
+                Console.Write("Opção: ");
+                int.TryParse(Console.ReadLine(), out int entrada);
+
+                if(entrada == 4)//depois organizar melhor
+                {
+                    Console.WriteLine("=============================");
+                    break;
+                }else if (entrada == 3)
+                {
+                    Console.WriteLine("Tem certeza que quer remover a conta[S/N]: ");
+                    var resultado = Console.ReadLine();
+                    if(resultado == "S")
+                    {
+                        Console.WriteLine($"Conta removida com sucesso!");
+                        //Banco.
+                        //remover a conta e avisar que o sistema vai fechar e tem que iniciar novamente para logar!
+                    }
+                }
+
+            }
+            //CREIO QUE MenuLogado TEM QUE ESTAR EM PROGRAM.CS E CADASTRAR CONTA TEM QUE TER UM TRY CATCH TBM ASSIM COMO LOGIN, PENSAR NISSO
         }
     }
 }
