@@ -9,18 +9,28 @@ namespace KBank.Models
     {
         public  List<ContaBancaria> Contas = new List<ContaBancaria>();
 
+        public Banco() { }
 
-        public void login(string nameCont, int numberCont)
+
+        public void Login(string nameCont, int numberCont)
         {
+            var i = 0;
             foreach (var conta in Contas)
             {
                 if (conta.NumeroConta == numberCont && conta.NomeTitular == nameCont)
                 {
-                    Console.WriteLine("Conta encontrada!");
+                    Console.WriteLine($"Bem vindo {conta.NomeTitular}!");
+                    Console.WriteLine("=============================");
+                    break;
+                }
+
+                if (i == Contas.Count)
+                {
+                    throw new ContaInexistente("Essa conta não existe!");//ver o porque de nao estar caindo aqui quando faz login e depois continuar menulogado!
                 }
                 else
                 {
-                    throw new ContaInexistente("Essa conta não existe!");
+                    i++;
                 }
             }
         }
@@ -48,6 +58,7 @@ namespace KBank.Models
             var usuario = new ContaBancaria(NumeroConta, NomeTitular, Saldo);
             Contas.Add(usuario);
             Console.WriteLine($"Conta[{NumeroConta}] cadastrada com sucesso!");
+            Console.WriteLine("=============================");
         }
 
         public void RemoverConta(string nameCont, int numberCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
@@ -58,7 +69,9 @@ namespace KBank.Models
                 {
                     Console.WriteLine("Conta encontrada!");
                     Contas.Remove(conta);
-                    Console.WriteLine($"Conta[{conta.NumeroConta}] removida com sucesso!"); 
+                    Console.WriteLine($"Conta[{conta.NumeroConta}] removida com sucesso!");
+                    Console.WriteLine("=============================");
+                    break;
                 }
                 else
                 {

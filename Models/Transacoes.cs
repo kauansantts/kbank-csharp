@@ -12,5 +12,12 @@ namespace KBank.Models
         public DateTime DataTransacao { get; set; }
         public double Valor {  get; set; }
         public EnumTransacoes TipoTransacoes { get; set; }
+
+        public Transacoes(DateTime dataTransacao, double valor,  EnumTransacoes tipoTransacoes)
+        {
+            DataTransacao = dataTransacao;
+            Valor = valor;
+            TipoTransacoes = tipoTransacoes;
+        }
     }
 }
