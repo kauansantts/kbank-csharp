@@ -14,7 +14,8 @@ namespace KBank
             var banco = new Banco();
             while (true)
             {
-                Menus.Menuopc("Login", "Criar conta");
+                Menus.Menuopc("Login", "Criar conta", "Sair");
+                Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
                 if (entrada == 1)
                 {
@@ -27,18 +28,27 @@ namespace KBank
                     try
                     {
                         banco.Login(numero, nome);
+                        ContaBancaria.MenuLogado(banco);
                     }catch(Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
-                    ContaBancaria.MenuLogado();
                 }
 
                 else if(entrada == 2)
                 {
+                    try
+                    {
                     banco.CadastrarConta();
-                }else if (entrada == 3)
+                    }catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                
+                else if (entrada == 3)
                 {
+                    Console.WriteLine("==Saindo do sistema=========");
                     break;
                 }
             }

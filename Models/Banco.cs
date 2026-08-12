@@ -12,7 +12,7 @@ namespace KBank.Models
         public Banco() { }
 
 
-        public void Login(int numberCont, string nameCont)
+        public void Login(int numberCont, string nameCont)//PRIMEIRA opc do primeiro menu
         {
             foreach (var conta in Contas)
             {
@@ -25,7 +25,7 @@ namespace KBank.Models
             }
             throw new ContaInexistenteException("\"Essa conta não existe!\"");
         }
-        public void CadastrarConta()
+        public void CadastrarConta()//SEGUNDA opc do primeiro menu
         {
             Console.WriteLine("==Gerando numero de conta=========");
             var NumeroConta = new Random().Next(1000, 9999);
@@ -49,29 +49,26 @@ namespace KBank.Models
             Console.WriteLine("=============================");
         }
 
-        public void RemoverConta(ContaBancaria conta)//So consegue usar esse metodo, se ja estiver dentro da conta!
+        public void RemoverConta(int numberCont, string nameCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
         {
-            if (BuscarConta(conta) == conta)
-            {
-                Contas.Remove(conta);
-                Console.WriteLine($"Conta[{conta.NumeroConta}] removida com sucesso!");
-            }
+            var resultbusca = BuscarConta(numberCont, nameCont);
+            Console.WriteLine($"Conta[{resultbusca.NumeroConta}] removida com sucesso!");
+            Contas.Remove(resultbusca);
         }
 
 
 
-        public ContaBancaria BuscarConta(ContaBancaria conta)
+        public ContaBancaria BuscarConta(int numberCont, string nameCont)//metodo generico de busca de contas!
         {
             foreach (var user in Contas)
             {
-                if (user.NumeroConta == conta.NumeroConta && user.NomeTitular == conta.NomeTitular)
+                if (user.NumeroConta == numberCont && user.NomeTitular == nameCont)
                 {
-                    Console.WriteLine($"Conta encontrada: [{conta.NomeTitular}]");
-                    return conta;
+                    Console.WriteLine($"Conta encontrada: [{user.NomeTitular}]");
+                    return user;
                 }
             }
             throw new ContaInexistenteException("Essa conta não existe!");
-
         }
     }
 }
