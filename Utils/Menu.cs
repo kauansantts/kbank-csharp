@@ -29,7 +29,7 @@ namespace KBank.Utils
             }
         }
 
-        public static void MenuLogado(Banco bancoAtual)
+        public static void MenuLogado(Banco bancoAtual, ContaBancaria conta)
         {
             while (true)
             {
@@ -66,7 +66,8 @@ namespace KBank.Utils
                 }
                 else if (entrada == 3)
                 {
-                    //ExibirTransacoes();
+                    Console.WriteLine("==Exibindo transações=========");
+                    conta.ExibirTransacoes();
                 }
                 //fazer os metodos: Depositar, Sacar e Exibir transações!
             }
