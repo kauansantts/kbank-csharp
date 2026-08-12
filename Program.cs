@@ -28,7 +28,7 @@ namespace KBank
                     try
                     {
                         banco.Login(numero, nome);
-                        ContaBancaria.MenuLogado(banco);
+                        Menus.MenuLogado(banco);
                     }catch(Exception ex)
                     {
                         Console.WriteLine(ex.Message);
