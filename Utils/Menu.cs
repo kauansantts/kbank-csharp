@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace KBank.Utils
 {
@@ -49,10 +50,6 @@ namespace KBank.Utils
                     var resultado = Console.ReadLine();
                     if (resultado == "S" || resultado == "s")
                     {
-                        //Console.WriteLine("Nome do titular: ");
-                        //var name = Console.ReadLine();
-                        //Console.WriteLine("Numero da conta: ");
-                        //int.TryParse(Console.ReadLine(), out int number);
                         try
                         {
                             Console.WriteLine("==Removendo conta=========");
@@ -69,8 +66,32 @@ namespace KBank.Utils
                 {
                     Console.WriteLine("==Exibindo transações=========");
                     conta.ExibirTransacoes();
+                }else if(entrada == 1)
+                {
+                    try
+                    {
+                    Console.WriteLine("==Depositanto=========");
+                    Console.Write("Valor a ser depositado:R$ ");
+                    double.TryParse(Console.ReadLine(), out double valor);
+                    conta.Depositar(valor);
+                    }catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }else if (entrada == 2)
+                {
+                    try
+                    {
+                        Console.WriteLine("==Sacando=========");
+                        Console.Write("Valor a ser sacado:R$ ");
+                        double.TryParse(Console.ReadLine(), out double valor);
+                        conta.Sacar(valor);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
-                //fazer os metodos: Depositar, Sacar e Exibir transações!
             }
         }
     }
