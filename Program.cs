@@ -27,8 +27,8 @@ namespace KBank
                     Console.WriteLine("=============================");
                     try
                     {
-                        banco.Login(numero, nome);
-                        Menus.MenuLogado(banco);
+                        var logado = banco.Login(numero, nome);
+                        Menus.MenuLogado(banco, logado);
                     }catch(Exception ex)
                     {
                         Console.WriteLine(ex.Message);

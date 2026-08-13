@@ -49,13 +49,14 @@ namespace KBank.Utils
                     var resultado = Console.ReadLine();
                     if (resultado == "S" || resultado == "s")
                     {
-                        Console.WriteLine("Nome do titular: ");
-                        var name = Console.ReadLine();
-                        Console.WriteLine("Numero da conta: ");
-                        int.TryParse(Console.ReadLine(), out int number);
+                        //Console.WriteLine("Nome do titular: ");
+                        //var name = Console.ReadLine();
+                        //Console.WriteLine("Numero da conta: ");
+                        //int.TryParse(Console.ReadLine(), out int number);
                         try
                         {
-                            bancoAtual.RemoverConta(number, name);
+                            Console.WriteLine("==Removendo conta=========");
+                            bancoAtual.RemoverConta(conta.NumeroConta, conta.NomeTitular);
                             break;
                         }
                         catch (Exception ex)
@@ -64,7 +65,7 @@ namespace KBank.Utils
                         }
                     }
                 }
-                else if (entrada == 3)
+                else if (entrada == 4)
                 {
                     Console.WriteLine("==Exibindo transações=========");
                     conta.ExibirTransacoes();

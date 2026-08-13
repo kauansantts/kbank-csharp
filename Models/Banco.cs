@@ -12,7 +12,7 @@ namespace KBank.Models
         public Banco() { }
 
 
-        public void Login(int numberCont, string nameCont)//PRIMEIRA opc do primeiro menu
+        public ContaBancaria Login(int numberCont, string nameCont)//PRIMEIRA opc do primeiro menu
         {
             foreach (var conta in Contas)
             {
@@ -20,7 +20,7 @@ namespace KBank.Models
                 {
                     Console.WriteLine($"Bem vindo {conta.NomeTitular}!");
                     Console.WriteLine("=============================");
-                    return;
+                    return conta;
                 }
             }
             throw new ContaInexistenteException("\"Essa conta não existe!\"");
