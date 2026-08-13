@@ -34,7 +34,7 @@ namespace KBank.Utils
         {
             while (true)
             {
-                Menus.Menuopc("Depositar", "Sacar", "Remover conta", "Exibir transações", "Sair da conta");
+                Menus.Menuopc("Depositar", "Sacar", "Remover conta", "Exibir transações", "Sair da conta", "Exibir saldo");
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
@@ -91,6 +91,10 @@ namespace KBank.Utils
                     {
                         Console.WriteLine(ex.Message);
                     }
+                }else if (entrada == 6)
+                {
+                    Console.WriteLine("==Saldo==========");
+                    Console.WriteLine(conta.Saldo);
                 }
             }
         }

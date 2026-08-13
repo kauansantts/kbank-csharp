@@ -3,6 +3,7 @@ using KBank.Enums;
 using KBank.Exceptions;
 using KBank.Models;
 using KBank.Utils;
+using System.IO;
 
 namespace KBank
 {
