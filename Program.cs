@@ -4,6 +4,14 @@ using KBank.Exceptions;
 using KBank.Models;
 using KBank.Utils;
 using System.IO;
+using System.Linq;
+
+
+//caminho do diretorio = C:\Users\kauan\Documents\DEV\C#\KBank\Contas << dentro
+// var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{NumerodaConta}.txt" << exemplo para cada instancia de usuario
+
+
+
 
 namespace KBank
 {

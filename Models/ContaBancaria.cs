@@ -5,6 +5,7 @@ using KBank.Enums;
 using KBank.Exceptions;
 using KBank.Utils;
 using System.IO;
+using System.Linq;
 
 namespace KBank.Models
 {
@@ -31,11 +32,13 @@ namespace KBank.Models
                 throw new ValorNuloException("Valor nulo para essa operação!");
             }
             Saldo += valor;
-            Console.WriteLine($"Deposito de R${valor} feito com sucesso!");
+            Console.WriteLine($"Deposito de R${valor.ToString("F")} feito com sucesso!");
             var DataTransacao = DateTime.Now;
             var TipoTransacoes =  EnumTransacoes.Deposito;
             var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
-            Transacoes.Add(transacao);
+            Transacoes.Add(transacao);//ADD na lista local
+            //add no arquivo
+            SalvarDadosArquivo();
         }
 
         public void Sacar(double valor)
@@ -45,24 +48,51 @@ namespace KBank.Models
                 throw new ValorNuloException("Valor nulo para essa operação!");
             }
             Saldo -= valor;
-            Console.WriteLine($"Saque de R${valor} feito com sucesso!");
+            Console.WriteLine($"Saque de R${valor.ToString("F")} feito com sucesso!");
             Console.WriteLine("=============================");
             var DataTransacao = DateTime.Now;
             var TipoTransacoes = EnumTransacoes.Saque;
             var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
             Transacoes.Add(transacao);
+            //add no arquivo
+            SalvarDadosArquivo();
         }
 
         public void ExibirTransacoes()
         {
+            if (Transacoes.Count == 0)
+            {
+                Console.WriteLine("Você ainda nao efetuou transações!");
+                Console.WriteLine("=============================");
+                return;
+            }
+            
             foreach (var transaction in Transacoes)
             {
                 Console.WriteLine("=============================");
                 Console.WriteLine($"Tipo de transação: {transaction.TipoTransacoes}");
-                Console.WriteLine($"Valor da transação: {transaction.Valor}");
+                Console.WriteLine($"Valor da transação: R${transaction.Valor.ToString("F")}");
                 Console.WriteLine($"Data da transação: {transaction.DataTransacao}");
                 Console.WriteLine("=============================");
             }
+        }
+
+        public void SalvarDadosArquivo()
+        {
+            var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{NumeroConta}.txt";
+
+            List<string> dados = new List<string>();
+            dados.Add(NumeroConta.ToString());
+            dados.Add(NomeTitular);
+            dados.Add(Saldo.ToString());
+
+            foreach (var transaction in Transacoes)
+            {
+                string Transferencia = $"{transaction.TipoTransacoes};{transaction.Valor};{transaction.DataTransacao}";
+                dados.Add(Transferencia);
+            }
+
+            File.WriteAllLines(path, dados);
         }
     }
 }

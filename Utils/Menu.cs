@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace KBank.Utils
 {
@@ -34,17 +35,17 @@ namespace KBank.Utils
         {
             while (true)
             {
-                Menus.Menuopc("Depositar", "Sacar", "Remover conta", "Exibir transações", "Sair da conta", "Exibir saldo");
+                Menus.Menuopc("Depositar", "Sacar", "Exibir saldo", "Exibir transações", "Remover conta", "Sair da conta");
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
-                if (entrada == 5)//depois organizar melhor
+                if (entrada == 6)//depois organizar melhor
                 {
                     Console.WriteLine("==Saindo da conta=========");
                     Console.WriteLine("=============================");
                     break;
                 }
-                else if (entrada == 3)
+                else if (entrada == 5)
                 {
                     Console.WriteLine("Tem certeza que quer remover a conta[S/N]: ");
                     var resultado = Console.ReadLine();
@@ -91,10 +92,10 @@ namespace KBank.Utils
                     {
                         Console.WriteLine(ex.Message);
                     }
-                }else if (entrada == 6)
+                }else if (entrada == 3)
                 {
                     Console.WriteLine("==Saldo==========");
-                    Console.WriteLine(conta.Saldo);
+                    Console.WriteLine(conta.Saldo.ToString("F"));
                 }
             }
         }

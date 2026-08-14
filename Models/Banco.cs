@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using KBank.Exceptions;
 using System.IO;
+using System.Linq;
 
 namespace KBank.Models
 {
@@ -30,14 +31,13 @@ namespace KBank.Models
         {
             Console.WriteLine("==Gerando numero de conta=========");
             var NumeroConta = new Random().Next(1000, 9999);
-            foreach (var conta in Contas)
+            while (Contas.Any(conta => conta.NumeroConta == NumeroConta))
             {
-                if (conta.NumeroConta == NumeroConta)
-                {
-                    var NumeroContaNovo = new Random().Next(1000, 9999);
-                    NumeroConta = NumeroContaNovo;
-                }
+                var NumeroContaNovo = new Random().Next(1000, 9999);
+                NumeroConta = NumeroContaNovo;
             }
+
+
             string NomeTitular;
             Console.WriteLine($"Número da conta: {NumeroConta}");
             Console.WriteLine("Digite o nome do titular: ");
@@ -45,16 +45,29 @@ namespace KBank.Models
             Console.WriteLine("Digite o saldo inicial: ");
             double.TryParse(Console.ReadLine(), out double Saldo);
             var usuario = new ContaBancaria(NumeroConta, NomeTitular, Saldo);
-            Contas.Add(usuario);
-            Console.WriteLine($"Conta[{NumeroConta}] cadastrada com sucesso!");
+            Contas.Add(usuario);//ADD A CONTA NA LISTA LOCAL
+
+            //ADD A CONTA NO ARQUIVO
+            string[] dados = {NumeroConta.ToString(), NomeTitular, Saldo.ToString()};
+            var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{NumeroConta}.txt";
+            if (!File.Exists(path))
+            {
+                File.WriteAllLines(path, dados);
+            }
+
+
+                Console.WriteLine($"Conta[{NumeroConta}] cadastrada com sucesso!");
             Console.WriteLine("=============================");
         }
 
         public void RemoverConta(int numberCont, string nameCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
         {
+            //REMOVE A CONTA NA LISTA LOCAL
             var resultbusca = BuscarConta(numberCont, nameCont);
             Console.WriteLine($"Conta[{resultbusca.NumeroConta}] removida com sucesso!");
             Contas.Remove(resultbusca);
+
+            //REMOVE A CONTA NO ARQUIVO
         }
 
 
