@@ -66,8 +66,14 @@ namespace KBank.Models
             var resultbusca = BuscarConta(numberCont, nameCont);
             Console.WriteLine($"Conta[{resultbusca.NumeroConta}] removida com sucesso!");
             Contas.Remove(resultbusca);
+            Console.WriteLine("=============================");
 
             //REMOVE A CONTA NO ARQUIVO
+            var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{resultbusca.NumeroConta}.txt";
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
 
 

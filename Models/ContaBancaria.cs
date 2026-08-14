@@ -33,6 +33,7 @@ namespace KBank.Models
             }
             Saldo += valor;
             Console.WriteLine($"Deposito de R${valor.ToString("F")} feito com sucesso!");
+            Console.WriteLine("=============================");
             var DataTransacao = DateTime.Now;
             var TipoTransacoes =  EnumTransacoes.Deposito;
             var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
@@ -93,6 +94,34 @@ namespace KBank.Models
             }
 
             File.WriteAllLines(path, dados);
+        }
+
+        public void AlterarSaldo()
+        {
+            Console.WriteLine("==Saldo==========");
+            Console.WriteLine(Saldo.ToString("F"));
+
+            Console.Write("Deseja alterar seu saldo?[S/N] ");
+            var resposta = Console.ReadLine();
+            if (resposta == "s" || resposta == "S")
+            {
+                Console.WriteLine("=============================");
+                Console.Write($"Saldo[R${Saldo}]:R$ ");
+                var retorno = double.TryParse(Console.ReadLine(), out double novoSaldo);
+                if (novoSaldo < 0 || retorno == false)
+                {
+                    throw new ValorNuloException("Valor nulo para essa operação!");
+                }
+                Saldo = novoSaldo;
+                Console.WriteLine("Saldo alterado com sucesso");
+                Console.WriteLine($"Novo saldo de: R${Saldo}");
+                Console.WriteLine("=============================");
+                var DataTransacao = DateTime.Now;
+                var TipoTransacoes = EnumTransacoes.AlteraçãoSaldo;
+                var transacao = new Transacoes(DataTransacao, novoSaldo, TipoTransacoes);
+                Transacoes.Add(transacao);
+                SalvarDadosArquivo();
+            }
         }
     }
 }

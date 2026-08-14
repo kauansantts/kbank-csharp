@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using KBank.Exceptions;
 
 namespace KBank.Utils
 {
@@ -35,7 +36,7 @@ namespace KBank.Utils
         {
             while (true)
             {
-                Menus.Menuopc("Depositar", "Sacar", "Exibir saldo", "Exibir transações", "Remover conta", "Sair da conta");
+                Menus.Menuopc("Depositar", "Sacar", "Exibir/Alterar saldo", "Exibir transações", "Remover conta", "Sair da conta");
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
@@ -94,8 +95,13 @@ namespace KBank.Utils
                     }
                 }else if (entrada == 3)
                 {
-                    Console.WriteLine("==Saldo==========");
-                    Console.WriteLine(conta.Saldo.ToString("F"));
+                    try
+                    {
+                        conta.AlterarSaldo();
+                    }catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
         }
