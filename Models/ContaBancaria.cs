@@ -6,6 +6,7 @@ using KBank.Exceptions;
 using KBank.Utils;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace KBank.Models
 {
@@ -15,8 +16,6 @@ namespace KBank.Models
         public string NomeTitular { get; set; }
         public double Saldo { get; set; }
         public List<Transacoes> Transacoes = new List<Transacoes>();
-        public static Banco bancoConta = new Banco();
-
 
         public ContaBancaria(int numeroConta, string nomeTitular, double saldo)
         {
@@ -55,7 +54,6 @@ namespace KBank.Models
             var TipoTransacoes = EnumTransacoes.Saque;
             var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
             Transacoes.Add(transacao);
-            //add no arquivo
             SalvarDadosArquivo();
         }
 
@@ -113,6 +111,8 @@ namespace KBank.Models
                     throw new ValorNuloException("Valor nulo para essa operação!");
                 }
                 Saldo = novoSaldo;
+                Console.WriteLine("==Processando=========");
+                Thread.Sleep(1500);
                 Console.WriteLine("Saldo alterado com sucesso");
                 Console.WriteLine($"Novo saldo de: R${Saldo}");
                 Console.WriteLine("=============================");

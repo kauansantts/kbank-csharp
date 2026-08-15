@@ -4,14 +4,19 @@ using System.Text;
 using KBank.Exceptions;
 using System.IO;
 using System.Linq;
+using KBank.Enums;
+using System.Threading;
 
 namespace KBank.Models
 {
     public class Banco
     {
-        public  List<ContaBancaria> Contas = new List<ContaBancaria>();
+        public  List<ContaBancaria> Contas = new List<ContaBancaria>(); //lista de contas na ram
 
-        public Banco() { }
+        public Banco()
+        {
+            CarregarContasDoDisco();
+        }
 
 
         public ContaBancaria Login(int numberCont, string nameCont)//PRIMEIRA opc do primeiro menu
@@ -27,16 +32,17 @@ namespace KBank.Models
             }
             throw new ContaInexistenteException("\"Essa conta não existe!\"");
         }
+
         public void CadastrarConta()//SEGUNDA opc do primeiro menu
         {
             Console.WriteLine("==Gerando numero de conta=========");
+            Thread.Sleep(1500);
             var NumeroConta = new Random().Next(1000, 9999);
             while (Contas.Any(conta => conta.NumeroConta == NumeroConta))
             {
                 var NumeroContaNovo = new Random().Next(1000, 9999);
                 NumeroConta = NumeroContaNovo;
             }
-
 
             string NomeTitular;
             Console.WriteLine($"Número da conta: {NumeroConta}");
@@ -56,7 +62,7 @@ namespace KBank.Models
             }
 
 
-                Console.WriteLine($"Conta[{NumeroConta}] cadastrada com sucesso!");
+            Console.WriteLine($"Conta[{NumeroConta}] cadastrada com sucesso!");
             Console.WriteLine("=============================");
         }
 
@@ -76,8 +82,6 @@ namespace KBank.Models
             }
         }
 
-
-
         public ContaBancaria BuscarConta(int numberCont, string nameCont)//metodo generico de busca de contas!
         {
             foreach (var user in Contas)
@@ -89,6 +93,37 @@ namespace KBank.Models
                 }
             }
             throw new ContaInexistenteException("Essa conta não existe!");
+        }
+        
+        public void CarregarContasDoDisco()//Carregando as contas para a lista de contas na RAM (disco >> ram)
+        {
+            var diretorio = @"C:\Users\kauan\Documents\DEV\C#\KBank\Contas";
+            var arquivos = Directory.GetFiles(diretorio);
+
+            foreach (var arquivo in arquivos)//montando a lista na ram (gambiarra rsrs)
+            {
+                string[] linhas = File.ReadAllLines(arquivo);//um array de todas as linhas dos arquivos
+                int linhazero;
+                int.TryParse(linhas[0], out linhazero);
+                double linhadois;
+                double.TryParse(linhas[2], out linhadois);
+                var usuario = new ContaBancaria(linhazero, linhas[1], linhadois);
+
+                if (linhas.Length > 3)
+                {
+                    for (int i = 3; i < linhas.Length; i++)
+                    {
+                        var partes = linhas[i].Split(';');
+                        var partezero = Enum.Parse<EnumTransacoes>(partes[0]);
+                        var parteum = double.Parse(partes[1]);
+                        var partedois = DateTime.Parse(partes[2]);
+                        var transacao = new Transacoes(partedois, parteum, partezero);
+                        usuario.Transacoes.Add(transacao);
+                    }
+                }
+
+                Contas.Add(usuario);
+            }
         }
     }
 }

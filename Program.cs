@@ -5,13 +5,10 @@ using KBank.Models;
 using KBank.Utils;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 
-//caminho do diretorio = C:\Users\kauan\Documents\DEV\C#\KBank\Contas << dentro
-// var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{NumerodaConta}.txt" << exemplo para cada instancia de usuario
-
-
-
+//Futuras add: mais coisas no menu logado, consultas com LINQ entre outras coisas caderninho!
 
 namespace KBank
 {
@@ -37,6 +34,7 @@ namespace KBank
                     try
                     {
                         var logado = banco.Login(numero, nome);
+                        Thread.Sleep(1500);
                         Menus.MenuLogado(banco, logado);
                     }catch(Exception ex)
                     {
@@ -48,16 +46,17 @@ namespace KBank
                 {
                     try
                     {
-                    banco.CadastrarConta();
+                        banco.CadastrarConta();
                     }catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
                 }
-                
+
                 else if (entrada == 3)
                 {
                     Console.WriteLine("==Saindo do sistema=========");
+                    Thread.Sleep(2000);
                     break;
                 }
             }

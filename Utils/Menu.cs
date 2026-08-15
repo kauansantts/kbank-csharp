@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using KBank.Exceptions;
+using System.Threading;
 
 namespace KBank.Utils
 {
@@ -42,6 +43,8 @@ namespace KBank.Utils
 
                 if (entrada == 6)//depois organizar melhor
                 {
+                    Console.WriteLine("==Processando=========");
+                    Thread.Sleep(3000);
                     Console.WriteLine("==Saindo da conta=========");
                     Console.WriteLine("=============================");
                     break;
@@ -55,6 +58,7 @@ namespace KBank.Utils
                         try
                         {
                             Console.WriteLine("==Removendo conta=========");
+                            Thread.Sleep(2000);
                             bancoAtual.RemoverConta(conta.NumeroConta, conta.NomeTitular);
                             break;
                         }
@@ -67,15 +71,17 @@ namespace KBank.Utils
                 else if (entrada == 4)
                 {
                     Console.WriteLine("==Exibindo transações=========");
+                    Thread.Sleep(2000);
                     conta.ExibirTransacoes();
                 }else if(entrada == 1)
                 {
                     try
                     {
-                    Console.WriteLine("==Depositanto=========");
-                    Console.Write("Valor a ser depositado:R$ ");
-                    double.TryParse(Console.ReadLine(), out double valor);
-                    conta.Depositar(valor);
+                        Console.WriteLine("==Depositanto=========");
+                        Console.Write("Valor a ser depositado:R$ ");
+                        double.TryParse(Console.ReadLine(), out double valor);
+                        Thread.Sleep(2200);
+                        conta.Depositar(valor);
                     }catch(Exception ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -87,6 +93,8 @@ namespace KBank.Utils
                         Console.WriteLine("==Sacando=========");
                         Console.Write("Valor a ser sacado:R$ ");
                         double.TryParse(Console.ReadLine(), out double valor);
+                        Console.WriteLine("==Processando=========");
+                        Thread.Sleep(2200);
                         conta.Sacar(valor);
                     }
                     catch (Exception ex)
