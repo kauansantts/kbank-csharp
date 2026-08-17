@@ -21,16 +21,10 @@ namespace KBank.Models
 
         public ContaBancaria Login(int numberCont, string nameCont)//PRIMEIRA opc do primeiro menu
         {
-            foreach (var conta in Contas)
-            {
-                if (conta.NumeroConta == numberCont && conta.NomeTitular == nameCont)
-                {
-                    Console.WriteLine($"Bem vindo {conta.NomeTitular}!");
-                    Console.WriteLine("=============================");
-                    return conta;
-                }
-            }
-            throw new ContaInexistenteException("\"Essa conta não existe!\"");
+            var resultado = BuscarConta(numberCont, nameCont);
+            Console.WriteLine($"Bem vindo {resultado.NomeTitular}!");
+            Console.WriteLine("=============================");
+            return resultado;
         }
 
         public void CadastrarConta()//SEGUNDA opc do primeiro menu
@@ -38,16 +32,15 @@ namespace KBank.Models
             Console.WriteLine("==Gerando numero de conta=========");
             Thread.Sleep(1500);
             var NumeroConta = new Random().Next(1000, 9999);
-            while (Contas.Any(conta => conta.NumeroConta == NumeroConta))
+            while (Contas.Any(conta => conta.NumeroConta == NumeroConta))//LINQ
             {
                 var NumeroContaNovo = new Random().Next(1000, 9999);
                 NumeroConta = NumeroContaNovo;
             }
 
-            string NomeTitular;
             Console.WriteLine($"Número da conta: {NumeroConta}");
             Console.WriteLine("Digite o nome do titular: ");
-            NomeTitular = Console.ReadLine();
+            var NomeTitular = Console.ReadLine();
             Console.WriteLine("Digite o saldo inicial: ");
             double.TryParse(Console.ReadLine(), out double Saldo);
             var usuario = new ContaBancaria(NumeroConta, NomeTitular, Saldo);
@@ -102,11 +95,11 @@ namespace KBank.Models
 
             foreach (var arquivo in arquivos)//montando a lista na ram (gambiarra rsrs)
             {
-                string[] linhas = File.ReadAllLines(arquivo);//um array de todas as linhas dos arquivos
-                int linhazero;
-                int.TryParse(linhas[0], out linhazero);
-                double linhadois;
-                double.TryParse(linhas[2], out linhadois);
+                string[] linhas = File.ReadAllLines(arquivo);//um array de todas as linhas dos arquivos            
+                
+                int.TryParse(linhas[0], out int linhazero);//numero de conta
+                double.TryParse(linhas[2], out double linhadois);//saldo
+                
                 var usuario = new ContaBancaria(linhazero, linhas[1], linhadois);
 
                 if (linhas.Length > 3)
@@ -114,9 +107,9 @@ namespace KBank.Models
                     for (int i = 3; i < linhas.Length; i++)
                     {
                         var partes = linhas[i].Split(';');
-                        var partezero = Enum.Parse<EnumTransacoes>(partes[0]);
-                        var parteum = double.Parse(partes[1]);
-                        var partedois = DateTime.Parse(partes[2]);
+                        var partezero = Enum.Parse<EnumTransacoes>(partes[0]);//tipo da transacao
+                        var parteum = double.Parse(partes[1]);//valor da transacao
+                        var partedois = DateTime.Parse(partes[2]);//data da transacao
                         var transacao = new Transacoes(partedois, parteum, partezero);
                         usuario.Transacoes.Add(transacao);
                     }

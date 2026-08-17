@@ -37,11 +37,11 @@ namespace KBank.Utils
         {
             while (true)
             {
-                Menus.Menuopc("Depositar", "Sacar", "Exibir/Alterar saldo", "Exibir transações", "Remover conta", "Sair da conta");
+                Menus.Menuopc("Depositar", "Sacar", "Exibir/Alterar saldo", "Exibir transações","Transações personalizadas", "Remover conta", "Sair da conta");
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
-                if (entrada == 6)//depois organizar melhor
+                if (entrada == 7)//depois organizar melhor
                 {
                     Console.WriteLine("==Processando=========");
                     Thread.Sleep(3000);
@@ -49,7 +49,7 @@ namespace KBank.Utils
                     Console.WriteLine("=============================");
                     break;
                 }
-                else if (entrada == 5)
+                else if (entrada == 6)
                 {
                     Console.WriteLine("Tem certeza que quer remover a conta[S/N]: ");
                     var resultado = Console.ReadLine();
@@ -107,6 +107,17 @@ namespace KBank.Utils
                     {
                         conta.AlterarSaldo();
                     }catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else if (entrada == 5)
+                {
+                    try
+                    {
+                        conta.TransacoesPersonalizadas();
+                    }
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }

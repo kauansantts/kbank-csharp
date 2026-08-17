@@ -37,8 +37,7 @@ namespace KBank.Models
             var TipoTransacoes =  EnumTransacoes.Deposito;
             var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
             Transacoes.Add(transacao);//ADD na lista local
-            //add no arquivo
-            SalvarDadosArquivo();
+            SalvarDadosArquivo();//add no arquivo
         }
 
         public void Sacar(double valor)
@@ -61,19 +60,74 @@ namespace KBank.Models
         {
             if (Transacoes.Count == 0)
             {
-                Console.WriteLine("Você ainda nao efetuou transações!");
+                Console.WriteLine("Você ainda não efetuou transações!");
                 Console.WriteLine("=============================");
                 return;
             }
             
-            foreach (var transaction in Transacoes)
+            foreach (var transacao in Transacoes)
             {
                 Console.WriteLine("=============================");
-                Console.WriteLine($"Tipo de transação: {transaction.TipoTransacoes}");
-                Console.WriteLine($"Valor da transação: R${transaction.Valor.ToString("F")}");
-                Console.WriteLine($"Data da transação: {transaction.DataTransacao}");
+                Console.WriteLine($"Tipo de transação: {transacao.TipoTransacoes}");
+                Console.WriteLine($"Valor da transação: R${transacao.Valor.ToString("F")}");
+                Console.WriteLine($"Data da transação: {transacao.DataTransacao}");
                 Console.WriteLine("=============================");
             }
+        }
+
+        public void TransacoesPersonalizadas()
+        {
+            Menus.Menuopc("Total das transações", "Transações de saque", "Transações de deposito", "Maiores transações");
+            Console.Write("Opção: ");
+            int.TryParse(Console.ReadLine(), out int entrada);
+            switch (entrada)
+            {
+                case 1:
+                    var somatorio = Transacoes.Sum(transacao => transacao.Valor);
+                    Thread.Sleep(1200);
+                    Console.WriteLine($"Valor movimentado na conta: R${somatorio}");
+                    break;
+
+                case 2:
+                    var saques = Transacoes.Where(transacao => transacao.TipoTransacoes == EnumTransacoes.Saque);
+                    foreach(var saque in saques)
+                    {
+                        Console.WriteLine("=============================");
+                        Console.WriteLine($"Tipo de transação: {saque.TipoTransacoes}");
+                        Console.WriteLine($"Valor da transação: {saque.Valor.ToString("F")}");
+                        Console.WriteLine($"Data da transação: {saque.DataTransacao}");
+                        Console.WriteLine("=============================");
+                        Thread.Sleep(1200);
+                    }
+                    break;
+
+                case 3:
+                    var depositos = Transacoes.Where(transacao => transacao.TipoTransacoes == EnumTransacoes.Deposito);
+                    foreach(var deposito in depositos)
+                    {
+                        Console.WriteLine("=============================");
+                        Console.WriteLine($"Tipo de transação: {deposito.TipoTransacoes}");
+                        Console.WriteLine($"Valor da transação: {deposito.Valor.ToString("F")}");
+                        Console.WriteLine($"Data da transação: {deposito.DataTransacao}");
+                        Console.WriteLine("=============================");
+                        Thread.Sleep(1200);
+                    }
+                    break;
+
+                case 4:
+                    var maiores = Transacoes.OrderBy(transacao => transacao.Valor);
+                    foreach(var maior in maiores)
+                    {
+                        Console.WriteLine("=============================");
+                        Console.WriteLine($"Tipo de transação: {maior.TipoTransacoes}");
+                        Console.WriteLine($"Valor da transação: {maior.Valor.ToString("F")}");
+                        Console.WriteLine($"Data da transação: {maior.DataTransacao}");
+                        Console.WriteLine("=============================");
+                        Thread.Sleep(1200);
+                    }
+                    break;
+            }
+
         }
 
         public void SalvarDadosArquivo()
@@ -85,9 +139,9 @@ namespace KBank.Models
             dados.Add(NomeTitular);
             dados.Add(Saldo.ToString());
 
-            foreach (var transaction in Transacoes)
+            foreach (var transacao in Transacoes)
             {
-                string Transferencia = $"{transaction.TipoTransacoes};{transaction.Valor};{transaction.DataTransacao}";
+                string Transferencia = $"{transacao.TipoTransacoes};{transacao.Valor};{transacao.DataTransacao}";
                 dados.Add(Transferencia);
             }
 
@@ -104,7 +158,7 @@ namespace KBank.Models
             if (resposta == "s" || resposta == "S")
             {
                 Console.WriteLine("=============================");
-                Console.Write($"Saldo[R${Saldo}]:R$ ");
+                Console.Write($"Saldo[R${Saldo.ToString()}]:R$ ");
                 var retorno = double.TryParse(Console.ReadLine(), out double novoSaldo);
                 if (novoSaldo < 0 || retorno == false)
                 {
@@ -114,7 +168,7 @@ namespace KBank.Models
                 Console.WriteLine("==Processando=========");
                 Thread.Sleep(1500);
                 Console.WriteLine("Saldo alterado com sucesso");
-                Console.WriteLine($"Novo saldo de: R${Saldo}");
+                Console.WriteLine($"Novo saldo de: R${Saldo.ToString()}");
                 Console.WriteLine("=============================");
                 var DataTransacao = DateTime.Now;
                 var TipoTransacoes = EnumTransacoes.AlteraçãoSaldo;
