@@ -48,7 +48,7 @@ namespace KBank.Models
             Console.WriteLine($"Número da conta: {NumeroConta}");
             Console.WriteLine("Digite o nome do titular: ");
             NomeTitular = Console.ReadLine();
-            Console.WriteLine("Digite o saldo inicial: ");
+            Console.WriteLine("Digite o saldo inicial:R$ ");
             double.TryParse(Console.ReadLine(), out double Saldo);
             var usuario = new ContaBancaria(NumeroConta, NomeTitular, Saldo);
             Contas.Add(usuario);//ADD A CONTA NA LISTA LOCAL
