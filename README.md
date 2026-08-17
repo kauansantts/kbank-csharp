@@ -26,19 +26,20 @@ Git/GitHub
 
 🏗️ Estrutura do projeto
 
+```text
 KBank/
 ├── Models/
 │   ├── Banco.cs
-│   └── ContaBancaria.cs
-│	└──Transacoes.cs
+│   ├── ContaBancaria.cs
+│   └── Transacoes.cs
 ├── Utils/
 │   └── Menu.cs
 ├── Enums/
 │   └── EnumTransacoes.cs
 ├── Exceptions/
-│   └── ContaExistenteException.cs
-│	└── ContaInexistenteException.cs
-│	└── ValorNuloException.cs
+│   ├── ContaExistenteException.cs
+│   ├── ContaInexistenteException.cs
+│   └── ValorNuloException.cs
 └── Program.cs
 
 🧠 Conceitos aplicados
