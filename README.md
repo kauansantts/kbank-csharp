@@ -1,4 +1,5 @@
 # KBank.Console
+```text
 KBank Finances
 
 Aqui você gerencia suas despesas, simples e rápido.
@@ -77,4 +78,3 @@ Criar API
 Kauan Santos
 
 GitHub: https://github.com/kauansantts
-LinkedIn: https://www.linkedin.com/in/kauan-santos-9812672a9/
