@@ -1,3 +1,4 @@
+# KBank.Console
 KBank Finances
 
 Aqui você gerencia suas despesas, simples e rápido.
@@ -10,37 +11,45 @@ A proposta do projeto é melhorar a dinâmica de organização financeira.
 É um projeto de console para estudos e praticas conforme a conclusão do meu curso de C#
 
 🎯 Objetivos
+
 Pratica de linguagem
 Alinhar conceitos não dominantes
 Controlar minhas financias, de uma forma mais pessoal e ligada a mim
 Concretizar aprendizado visto no curso
+
 🛠️ Tecnologias utilizadas
+
 C#
 Bibliotecas .NET
 Visual Studio 2022
 Git/GitHub
+
 🏗️ Estrutura do projeto
+
 KBank/
 ├── Models/
 │   ├── Banco.cs
 │   └── ContaBancaria.cs
-│   └── Transacoes.cs
+│	└──Transacoes.cs
 ├── Utils/
 │   └── Menu.cs
 ├── Enums/
 │   └── EnumTransacoes.cs
 ├── Exceptions/
-│   ├── ContaExistenteException.cs
-│   ├── ContaInexistenteException.cs
-│   └── ValorNuloException.cs
+│   └── ContaExistenteException.cs
+│	└── ContaInexistenteException.cs
+│	└── ValorNuloException.cs
 └── Program.cs
+
 🧠 Conceitos aplicados
-Programação Orientada a Objetos
-Composição
-Tratamento de exceções
-LINQ
-Persistência de dados
+
+Programação Orientada a Objetos, 
+Composição, 
+Tratamento de exceções, 
+LINQ, 
+Persistência de dados, 
 Biblioteca .IO
+
 💾 Persistência de dados
 
 Os dados sao armazenados na memoria RAM por meio de uma list<> e salvos no disco em arquivos .txt
@@ -55,13 +64,16 @@ Estrutura de codigos mais organizadas
 Instanciamento de objetos de uma forma mais centrada
 
 🔮 Próximos passos
+
 Mais consultas e metodos usando LINQ
+
 Codigos mais limpos e simplificados
+
 Criar API
+
 👨‍💻 Autor
 
 Kauan Santos
 
 GitHub: https://github.com/kauansantts
-
 LinkedIn: https://www.linkedin.com/in/kauan-santos-9812672a9/
