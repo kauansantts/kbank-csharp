@@ -1,4 +1,5 @@
 # KBank.Console
+```text
 KBank Finances
 
 Aqui você gerencia suas despesas, simples e rápido.
@@ -26,19 +27,20 @@ Git/GitHub
 
 🏗️ Estrutura do projeto
 
+```text
 KBank/
 ├── Models/
 │   ├── Banco.cs
-│   └── ContaBancaria.cs
-│	└──Transacoes.cs
+│   ├── ContaBancaria.cs
+│   └── Transacoes.cs
 ├── Utils/
 │   └── Menu.cs
 ├── Enums/
 │   └── EnumTransacoes.cs
 ├── Exceptions/
-│   └── ContaExistenteException.cs
-│	└── ContaInexistenteException.cs
-│	└── ValorNuloException.cs
+│   ├── ContaExistenteException.cs
+│   ├── ContaInexistenteException.cs
+│   └── ValorNuloException.cs
 └── Program.cs
 
 🧠 Conceitos aplicados
@@ -76,4 +78,3 @@ Criar API
 Kauan Santos
 
 GitHub: https://github.com/kauansantts
-LinkedIn: https://www.linkedin.com/in/kauan-santos-9812672a9/
