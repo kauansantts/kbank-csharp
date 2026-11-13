@@ -67,7 +67,7 @@ Instanciamento de objetos de uma forma mais centrada
 
 🔮 Próximos passos
 
-Mais consultas e metodos usando LINQ
+Mais consultas e metodos usando LINQ(feito com o método TransacoesPersonalizadas)
 
 Codigos mais limpos e simplificados
 

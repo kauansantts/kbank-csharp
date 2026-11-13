@@ -37,11 +37,11 @@ namespace KBank.Utils
         {
             while (true)
             {
-                Menus.Menuopc("Depositar", "Sacar", "Exibir/Alterar saldo", "Exibir transações","Transações personalizadas", "Remover conta", "Sair da conta");
+                Menus.Menuopc("Depositar", "Sacar", "Exibir/Alterar saldo", "Exibir transações","Transações personalizadas", "Remover conta", "Transferencia entre contas", "Sair da conta");
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
-                if (entrada == 7)//depois organizar melhor
+                if (entrada == 8)//depois organizar melhor
                 {
                     Console.WriteLine("==Processando=========");
                     Thread.Sleep(3000);
@@ -59,7 +59,7 @@ namespace KBank.Utils
                         {
                             Console.WriteLine("==Removendo conta=========");
                             Thread.Sleep(2000);
-                            bancoAtual.RemoverConta(conta.NumeroConta, conta.NomeTitular);
+                            bancoAtual.RemoverConta(conta.NumeroConta);//, conta.NomeTitular);
                             break;
                         }
                         catch (Exception ex)
@@ -81,7 +81,7 @@ namespace KBank.Utils
                         Console.Write("Valor a ser depositado:R$ ");
                         double.TryParse(Console.ReadLine(), out double valor);
                         Thread.Sleep(2200);
-                        conta.Depositar(valor);
+                        conta.Depositar(valor, conta);
                     }catch(Exception ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -95,7 +95,7 @@ namespace KBank.Utils
                         double.TryParse(Console.ReadLine(), out double valor);
                         Console.WriteLine("==Processando=========");
                         Thread.Sleep(2200);
-                        conta.Sacar(valor);
+                        conta.Sacar(valor, conta);
                     }
                     catch (Exception ex)
                     {
@@ -105,7 +105,7 @@ namespace KBank.Utils
                 {
                     try
                     {
-                        conta.AlterarSaldo();
+                        conta.AlterarSaldo(conta);
                     }catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -118,6 +118,31 @@ namespace KBank.Utils
                         conta.TransacoesPersonalizadas();
                     }
                     catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else if(entrada == 7)
+                {
+                    try
+                    {
+                        Console.WriteLine("==Transferencia iniciada=========");
+                        Console.Write("Valor a ser transferido:R$ ");
+                        double.TryParse(Console.ReadLine(), out double valorTransferencia);
+                        Console.Write("Numero da conta que vai transferir: ");
+                        int.TryParse(Console.ReadLine(), out int numberCont);
+                        Console.WriteLine("=============================");
+                        //Console.Write("Nome do titular da conta que vai transferir: ");
+                        //var nameCont = Console.ReadLine();
+                        //if(nameCont is null) throw new ArgumentNullException("Parametros nulos invalidos!");
+
+                        bancoAtual.TransfirToContas(conta, valorTransferencia, numberCont);//, nameCont!);
+                        Thread.Sleep(1500);
+                        Console.WriteLine("==Transferencia finalizada!=========");
+                        Console.WriteLine("Verifique suas contas!");
+                        Console.WriteLine("=============================");
+                    }
+                    catch(Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }

@@ -21,7 +21,7 @@ namespace KBank.Models
 
         public ContaBancaria Login(int numberCont, string nameCont)//PRIMEIRA opc do primeiro menu
         {
-            var resultado = BuscarConta(numberCont, nameCont);
+            var resultado = BuscarConta(numberCont);//, nameCont);
             Console.WriteLine($"Bem vindo {resultado.NomeTitular}!");
             Console.WriteLine("=============================");
             return resultado;
@@ -59,10 +59,10 @@ namespace KBank.Models
             Console.WriteLine("=============================");
         }
 
-        public void RemoverConta(int numberCont, string nameCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
+        public void RemoverConta(int numberCont)//, string nameCont)//So consegue usar esse metodo, se ja estiver dentro da conta!
         {
             //REMOVE A CONTA NA LISTA LOCAL
-            var resultbusca = BuscarConta(numberCont, nameCont);
+            var resultbusca = BuscarConta(numberCont);//, nameCont);
             Console.WriteLine($"Conta[{resultbusca.NumeroConta}] removida com sucesso!");
             Contas.Remove(resultbusca);
             Console.WriteLine("=============================");
@@ -75,11 +75,23 @@ namespace KBank.Models
             }
         }
 
-        public ContaBancaria BuscarConta(int numberCont, string nameCont)//metodo generico de busca de contas!
+        public void TransfirToContas(ContaBancaria conta, double valorTransferencia, int numberCont)
+        {
+            if (valorTransferencia <= 0)
+            {
+                throw new ValorNuloException("Valor nulo para essa operação!");
+            }
+
+            conta.Sacar(valorTransferencia, conta);
+            var contaTransferida = BuscarConta(numberCont);
+            contaTransferida.Depositar(valorTransferencia, contaTransferida);
+        }
+
+        public ContaBancaria BuscarConta(int numberCont)//, //string nameCont)//metodo generico de busca de contas!
         {
             foreach (var user in Contas)
             {
-                if (user.NumeroConta == numberCont && user.NomeTitular == nameCont)
+                if (user.NumeroConta == numberCont) //&& user.NomeTitular == nameCont)
                 {
                     Console.WriteLine($"Conta encontrada: [{user.NomeTitular}]");
                     return user;
@@ -110,7 +122,8 @@ namespace KBank.Models
                         var partezero = Enum.Parse<EnumTransacoes>(partes[0]);//tipo da transacao
                         var parteum = double.Parse(partes[1]);//valor da transacao
                         var partedois = DateTime.Parse(partes[2]);//data da transacao
-                        var transacao = new Transacoes(partedois, parteum, partezero);
+                        var partetres = int.Parse(partes[3]);
+                        var transacao = new Transacoes(partedois, parteum, partezero, partetres);
                         usuario.Transacoes.Add(transacao);
                     }
                 }

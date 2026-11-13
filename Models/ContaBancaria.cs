@@ -24,7 +24,7 @@ namespace KBank.Models
             Saldo = saldo;
         }
 
-        public void Depositar(double valor)
+        public void Depositar(double valor, ContaBancaria conta)
         {
             if (valor <= 0)
             {
@@ -35,12 +35,12 @@ namespace KBank.Models
             Console.WriteLine("=============================");
             var DataTransacao = DateTime.Now;
             var TipoTransacoes =  EnumTransacoes.Deposito;
-            var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
+            var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes, conta.NumeroConta);
             Transacoes.Add(transacao);//ADD na lista local
             SalvarDadosArquivo();//add no arquivo
         }
 
-        public void Sacar(double valor)
+        public void Sacar(double valor, ContaBancaria conta)
         {
             if (valor <= 0 || valor > Saldo)
             {
@@ -51,10 +51,21 @@ namespace KBank.Models
             Console.WriteLine("=============================");
             var DataTransacao = DateTime.Now;
             var TipoTransacoes = EnumTransacoes.Saque;
-            var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes);
+            var transacao = new Transacoes(DataTransacao, valor, TipoTransacoes, conta.NumeroConta);
             Transacoes.Add(transacao);
             SalvarDadosArquivo();
         }
+
+        //public void TransfirToContas(ContaBancaria conta, double valorTransferencia)
+        //{
+        //    if (valorTransferencia <= 0)
+        //    {
+        //        throw new ValorNuloException("Valor nulo para essa operação!");
+        //    }
+
+        //    conta.Sacar(valorTransferencia, conta);
+
+        //}
 
         public void ExibirTransacoes()
         {
@@ -141,14 +152,14 @@ namespace KBank.Models
 
             foreach (var transacao in Transacoes)
             {
-                string Transferencia = $"{transacao.TipoTransacoes};{transacao.Valor};{transacao.DataTransacao}";
+                string Transferencia = $"{transacao.TipoTransacoes};{transacao.Valor};{transacao.DataTransacao};{transacao.NumeroConta}";
                 dados.Add(Transferencia);
             }
 
             File.WriteAllLines(path, dados);
         }
 
-        public void AlterarSaldo()
+        public void AlterarSaldo(ContaBancaria conta)
         {
             Console.WriteLine("==Saldo==========");
             Console.WriteLine(Saldo.ToString("F"));
@@ -172,7 +183,7 @@ namespace KBank.Models
                 Console.WriteLine("=============================");
                 var DataTransacao = DateTime.Now;
                 var TipoTransacoes = EnumTransacoes.AlteraçãoSaldo;
-                var transacao = new Transacoes(DataTransacao, novoSaldo, TipoTransacoes);
+                var transacao = new Transacoes(DataTransacao, novoSaldo, TipoTransacoes, conta.NumeroConta);
                 Transacoes.Add(transacao);
                 SalvarDadosArquivo();
             }
